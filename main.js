@@ -26,6 +26,10 @@ const menuData = [
     { id: 'kpop', title: 'K-POP Party', subtitle: "Penny's 7th birthday • 2026", folder: 'K-POP Party' }
 ];
 
+// Import static assets
+import Logo from '/Assets/Logo.svg';
+import Arrow from '/Assets/Arrow.svg';
+
 // Import all images eagerly or lazily from the Photos directory
 const allImages = import.meta.glob('/Photos/**/*.{jpeg,jpg,png,svg}', { eager: false });
 
@@ -46,13 +50,13 @@ function renderAppStructure() {
     app.innerHTML = `
     <div class="layout-grid">
       <div id="menu-container">
-        <img id="logo" src="/Assets/Logo.svg" alt="Sophie Plans Parties" style="cursor: pointer;">
+        <img id="logo" src="${Logo}" alt="Sophie Plans Parties" style="cursor: pointer;">
         <div id="menu-list"></div>
       </div>
       <div id="content-container">
         <div id="mobile-header">
           <div id="back-button">
-            <img src="/Assets/Arrow.svg" style="transform: rotate(180deg); width: 20px; height: 20px;" alt="Back">
+            <img src="${Arrow}" style="transform: rotate(180deg); width: 20px; height: 20px;" alt="Back">
             Home
           </div>
         </div>
@@ -82,7 +86,7 @@ function renderMenu() {
         div.innerHTML = `
       <div class="menu-item-header">
         <p class="menu-item-title">${item.title}</p>
-        <img src="/Assets/Arrow.svg" alt="Arrow" class="menu-item-arrow">
+        <img src="${Arrow}" alt="Arrow" class="menu-item-arrow">
       </div>
       <p class="menu-item-subtitle">${item.subtitle}</p>
     `;
@@ -127,10 +131,21 @@ async function renderContent() {
         // Render Home View
         const homeImg = document.createElement('img');
         homeImg.id = 'main-image';
-        // Use the specific K-POP image as requested
-        const homeImageSrc = '/Photos/K-POP Party/IMG_6903.jpeg';
 
-        // We can try to preload it to ensure it exists, but strict path is provided
+        // Use the specific K-POP image as requested, resolving via Vite glob
+        const homeImageKey = '/Photos/K-POP Party/IMG_6903.jpeg';
+        let homeImageSrc = '';
+
+        if (allImages[homeImageKey]) {
+            homeImageSrc = (await allImages[homeImageKey]()).default;
+        } else {
+            // Fallback: pick the first available image if specific one fails
+            const firstKey = Object.keys(allImages)[0];
+            if (firstKey) {
+                homeImageSrc = (await allImages[firstKey]()).default;
+            }
+        }
+
         homeImg.src = homeImageSrc;
         homeImg.alt = "Home Feature";
 
