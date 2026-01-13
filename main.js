@@ -48,9 +48,9 @@ function init() {
 function renderAppStructure() {
     const app = document.getElementById('app');
     app.innerHTML = `
+    <img id="logo" src="${Logo}" alt="Sophie Plans Parties" style="cursor: pointer;">
     <div class="layout-grid">
       <div id="menu-container">
-        <img id="logo" src="${Logo}" alt="Sophie Plans Parties" style="cursor: pointer;">
         <div id="menu-list"></div>
       </div>
       <div id="content-container">
