@@ -31,7 +31,6 @@ body {
 
 #app {
     width: 100%;
-    /* Remove fixed height to allow body scroll */
     min-height: 100vh;
     padding: 24px;
     box-sizing: border-box;
@@ -41,13 +40,11 @@ body {
     display: grid;
     grid-template-columns: 464px 1fr;
     gap: 24px;
-    /* Remove fixed height/overflow */
     align-items: start;
 }
 
 /* Menu Column */
 #menu-container {
-    /* Make menu sticky as page scrolls */
     position: sticky;
     top: 24px;
     max-height: calc(100vh - 48px);
@@ -69,7 +66,6 @@ body {
     margin-bottom: 24px;
     height: auto;
     display: block;
-    /* No max-width restraint, full width of container */
 }
 
 .menu-item {
@@ -139,7 +135,6 @@ body {
 /* Content Column (Gallery/Home) */
 /* Content Column (Gallery/Home) */
 #content-container {
-    /* Remove fixed height to allow scrolling */
     padding: 0;
     background: transparent;
     border-radius: 16px;
